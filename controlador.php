@@ -46,26 +46,26 @@
 			$this->vista->mostrar("usuario/formularioLogin", $data);
         }
 			
-			// --------------------------------- MOSTRAR LISTA DE INCIDENCIAS ----------------------------------------
+			// --------------------------------- MOSTRAR LISTA DE Instalaciones ----------------------------------------
 
-        public function mostrarListaIncidencias() {
-			$idUsuario = $_SESSION["idUsuario"];
-			$data['listaIncidencias'] = $this->incidencia->getAll();
-			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+        public function mostrarInstalaciones() {
+			$id = $_SESSION["id"];
+			$data['listaInstalaciones'] = $this->instalacion->getAll();
+			$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
         }
 
-			// --------------------------------- FORMULARIO INSERTAR INCIDENCIAS ----------------------------------------
+			// --------------------------------- FORMULARIO INSERTAR Instalaciones ----------------------------------------
 
-        public function formularioInsertarIncidencia() {
+        public function formularioInsertarInstalacion() {
 			if ($this->seguridad->haySesionIniciada()) {
-				$this->vista->mostrar('incidencia/formularioInsertarIncidencia');
+				$this->vista->mostrar('instalacion/formularioInsertarInstalacion');
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}
         }
 		
 
-			// --------------------------------- INSERTAR INCIDENCIAS ----------------------------------------
+			// --------------------------------- INSERTAR Instalaciones ----------------------------------------
 
         public function insertarIncidencia() {
 				
@@ -73,28 +73,28 @@
 				// Vamos a procesar el formulario de alta de libros
 				// Primero, recuperamos todos los datos del formulario
 				// Ahora insertamos el libro en la BD
-				$result = $this->incidencia->insert($fecha, $lugar, $equipo, $observaciones, $estado, $descripcion);
+				$result = $this->instalacion->insert($nombre, $descripcion, $imagen, $precio);
 
 				// Lanzamos el INSERT contra la BD.
 				if ($result == 1) {
 					// Tenemos que averiguar que idUsuario se ha asignado a la incidencia que acabamos de insertar
-					$ultimoId = $this->incidencia->getLastId();
-					$data['msjInfo'] = "Incidencia insertado con exito";
+					$ultimoId = $this->instalacion->getLastId();
+					$data['msjInfo'] = "Instalacion insertada con exito";
 				} else {
 					// Si la insercion de la incidencia ha fallado, mostramos mensaje de error
-					$data['msjError'] = "Ha ocurrido un error al insertar la incidencia. Por favor, intentelo mas tarde.";
+					$data['msjError'] = "Ha ocurrido un error al insertar la instalacion. Por favor, intentelo mas tarde.";
 				}
 				$data['listaIncidencias'] = $this->incidencia->getAll();
-				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+				$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
 
 			}else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}	
 		}
 
-		// --------------------------------- BORRAR INCIDENCIAS ----------------------------------------
+		// --------------------------------- BORRAR Instalaciones ----------------------------------------
 
-        public function borrarIncidencia() {
+        /*public function borrarIncidencia() {
 			if ($this->seguridad->haySesionIniciada()) {
 
 				$idIncidencia = $_REQUEST["idIncidencia"];
@@ -111,38 +111,38 @@
 			}
 
 		}
+*/
+		// --------------------Elimina una Instalacion de la base de datos (petición por ajax)----------------------------
 
-		// --------------------Elimina una incidencia de la base de datos (petición por ajax)----------------------------
-
-	public function borrarIncidenciaAjax(){
+	public function borrarInstalacionAjax(){
 
 		if ($this->seguridad->haySesionIniciada()) {
-			// Recuperamos el id de la incidencia
-			$idIncidencia = $_REQUEST["idIncidencia"];
-			// Eliminamos la incidencia de la BD
-			$result = $this->incidencia->delete($idIncidencia);
+			// Recuperamos el id de la Instalacion
+			$id = $_REQUEST["id"];
+			// Eliminamos la Instalacion de la BD
+			$result = $this->instalacion->delete($id);
 			if ($result == 0) {
 				// Error al borrar. Enviamos el código -1 al JS
 				echo "-1";
 			}
 			else {
 				// Borrado con éxito. Enviamos el id del libro a JS
-				echo $idIncidencia;
+				echo $id;
 			}
 		} else {
 			echo "-1";
 		}
 	}
 
-		// --------------------------------- FORMULARIO MODIFICAR INCIDENCIAS ----------------------------------------
+		// --------------------------------- FORMULARIO MODIFICAR Instalaciones ----------------------------------------
 
-		public function formularioModificarIncidencia() {
-			if ($this->seguridad->haySesionIniciada()) {
+		public function formularioModificarInstalacion() {
+			if ($this->instalacion->haySesionIniciada()) {
 
-				$idUsuario = $_SESSION["idUsuario"];
-				$idIncidencia = $_REQUEST["idIncidencia"];
-				$data['incidencia'] = $this->incidencia->get($idIncidencia);
-				$this->vista->mostrar('incidencia/formularioModificarIncidencia', $data);
+				$idUsuario = $_SESSION["id"];
+				$id = $_REQUEST["id"];
+				$data['instalacion'] = $this->intalacion->get($id);
+				$this->vista->mostrar('instalacion/formularioModificarInstalacion', $data);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}
@@ -150,45 +150,35 @@
 
 		// --------------------------------- MODIFICAR INCIDENCIAS ----------------------------------------
 
-		public function modificarIncidencia() {
+		public function modificarInstalacion() {
 
 			if ($this->seguridad->haySesionIniciada()) {
 
-				// Vamos a procesar el formulario de modificaci�n de libros
-				// Primero, recuperamos todos los datos del formulario
-				$idIncidencia = $_REQUEST["idIncidencia"];
-				$fecha = $_REQUEST["fecha"];
-				$lugar = $_REQUEST["lugar"];
-				$equipo = $_REQUEST["equipo"];
-				$observaciones = $_REQUEST["observaciones"];
-				$estado = $_REQUEST["estado"];
-				$descripcion = $_REQUEST["descripcion"];
-
 				//lanzamos la consulta pa la bd
-				$result = $this->incidencia->update($idIncidencia, $fecha, $lugar, $equipo, $observaciones, $estado, $descripcion);
+				$result = $this->instalacion->update();
 				
 				if ($result == 1) {
 				// Si la modificación del libro ha funcionado, continuamos actualizando la tabla "escriben".
-					$data['msjInfo'] = "Incidencia actualizada con éxito";
+					$data['msjInfo'] = "Instalacion actualizada con éxito";
 				}else {
-					$data['msjError'] = "Error al actualizar la incidencia";
+					$data['msjError'] = "Error al actualizar la Instalacion";
 				}
-				$data['listaIncidencias'] = $this->incidencia->getAll();
-				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+				$data['listaInstalacion'] = $this->instalacion->getAll();
+				$this->vista->mostrar("instalacion/mostrarInstalacion", $data);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}
 		}
 
-		// --------------------------------- BUSCAR INCIDENCIAS ----------------------------------------
+		// --------------------------------- BUSCAR Instalaciones ----------------------------------------
 
         public function buscarIncidencias() {
 			// Recuperamos el texto de b�squeda de la variable de formulario
 			$textoBusqueda = $_REQUEST["textoBusqueda"];
 			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencas
-			$data['listaIncidencias'] = $this->incidencia->busquedaAproximada($textoBusqueda);
+			$data['listaInstalacion'] = $this->instalacion->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
-			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+			$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
 		}
 
 		//---------------------------------MOSTRAR LISTA USUARIOS ------------------------------------
@@ -283,8 +273,8 @@
 		public function formularioModificarUsuario() {
 			if ($this->seguridad->haySesionIniciada()) {
 
-				$idUsuario = $_REQUEST["idUsuario"];
-				$data['usuario'] = $this->usuario->get($idUsuario);
+				$id = $_REQUEST["id"];
+				$data['usuario'] = $this->usuario->get($id);
 				$this->vista->mostrar('usuario/formularioModificarUsuario', $data);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();

@@ -3,14 +3,14 @@
 
 	$(document).ready(function() {
 		$(".btnBorrar").click(function() {
-			$.get("index.php?action=borrarUsuarioAjax&id=" + this.id, null, function(idBorrada) {
+			$.get("index.php?action=borrarInstalacionAjax&id=" + this.id, null, function(idBorrada) {
 	
 				if (idBorrada == -1) {
-					$('#msjError').html("Ha ocurrido un error al borrar el usuario");
+					$('#msjError').html("Ha ocurrido un error al borrar la instalacion");
 				}
 				else {
-					$('#msjInfo').html("Usuario borrado con éxito");
-					$('#usuario' + idBorrada).remove();
+					$('#msjInfo').html("Instalacion borrada con éxito");
+					$('#instalacion' + idBorrada).remove();
 				}
 			});
 		});
@@ -44,7 +44,7 @@
 		echo "<form action='index.php'>
 				<input type='hidden' name='action' value='buscarUsuarios'>
 				BUSCAR POR:
-				<input type='text' name='textoBusqueda' placeholder='id, nombre, apellidos o tipo de usuario' size='30'>
+				<input type='text' name='textoBusqueda' placeholder='nombre, descripcion o precio' size='30'>
 				<input type='submit' value='Buscar'>
 			</form><br>";
 	}
@@ -53,12 +53,9 @@
 		echo "<form action = 'index.php' method = 'get'>
 			Ordenar por: 
 			<select name='tipoBusqueda'>
-				<option value='email'>e-mail</option>
-				<option value='nombre'>nombre</option>
-				<option value='apellido1'>1º apellido</option>
-				<option value='apellido2'>2º apellido</option>
-				<option value='tipo'>tipo</option>
-				<option value='dni'>DNI</option>
+				<option value='nombre'>Nombre</option>
+				<option value='descripcion'>Descripcion</option>
+				<option value='precio'>Precio</option>
 			</select>
 			<input type='hidden' name='action' value='tipoBusquedaUsuarios'>
 			<input type='submit' value='Ordenar'>";
@@ -71,28 +68,23 @@
 			echo "<tr>";
 				echo "<td>Imagen</td>";
 				echo "<td>Nombre</td>";
-				echo "<td colspan='2'>Apellidos</td>";
-				echo "<td>E.mail</td>";
-				echo "<td>Tipo</td>";
-				echo "<td>DNI</td>";
+				echo "<td>Descripcion</td>";
+				echo "<td>Precio</td>";
 				if (isset($_SESSION["id"])){
 					echo "<td colspan='2'>Opciones</td>";
 				}
             echo "</tr>";
             
-			foreach($data['listaUsuarios'] as $usuarios) {
-				echo "<tr id='usuario".$usuarios->id."'>";
-					echo "<td>".$usuarios->imagen."</td>";
-					echo "<td>".$usuarios->nombre."</td>";
-					echo "<td>".$usuarios->apellido1."</td>";
-					echo "<td>".$usuarios->apellido2."</td>";
-					echo "<td>".$usuarios->email."</td>";
-					echo "<td>".$usuarios->tipo."</td>";
-					echo "<td>".$usuarios->dni."</td>";
+			foreach($data['listaInstalaciones'] as $instalaciones) {
+				echo "<tr id='usuario".$instalaciones->id."'>";
+					echo "<td>".$instalaciones->imagen."</td>";
+					echo "<td>".$instalaciones->nombre."</td>";
+					echo "<td>".$instalaciones->descripcion."</td>";
+					echo "<td>".$instalaciones->precio."</td>";
 					if (isset($_SESSION["id"])){
-						echo "<td><a href='index.php?action=formularioModificarUsuario&id=".$usuarios->id."'>Modificar</a></td>";
+						echo "<td><a href='index.php?action=formularioModificarInstalacion&id=".$instalaciones->id."'>Modificar</a></td>";
 						//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=".$usuarios->id."'>Borrar</a></td>";
-						echo "<td><a href='#' class='btnBorrar' id='".$usuarios->id."'>Borrar por Ajax/jQuery</a></td>";
+						echo "<td><a href='#' class='btnBorrar' id='".$instalaciones->id."'>Borrar por Ajax/jQuery</a></td>";
 					}
 				echo "</tr>";
 			}
@@ -106,7 +98,7 @@
 
 	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
 	if (isset($_SESSION["id"])) {
-		echo "<p><a href='index.php?action=formularioInsertarUsuario'>Nuevo</a></p>";
+		echo "<p><a href='index.php?action=formularioInsertarInstalacion'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
