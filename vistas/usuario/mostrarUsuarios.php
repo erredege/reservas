@@ -23,7 +23,7 @@
 	if($_SESSION['tipo'] ==  "admin"){
 		echo "<p><h1><a href='index.php?action=/*TODO*/'> Reservas </a> | 
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
-		<a href='index.php?action=/*TODO*/'> Instalaciones </a></h1></p>";
+		<a href='index.php?action=mostrarInstalaciones'> Instalaciones </a></h1></p>";
 	}else{
 		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
 	}
