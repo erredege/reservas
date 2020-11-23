@@ -1,8 +1,8 @@
 <?php
 	include_once("vista.php");
-	include_once("modelos/usuario.php");
-	//include_once("modelos/incidencia.php");
 	include_once("modelos/seguridad.php");
+	include_once("modelos/usuario.php");
+	include_once("modelos/instalacion.php");
 
 	// Creamos los objetos vista y modelos
  
@@ -13,8 +13,9 @@
 
         public function __construct() {
             $this->vista = new Vista();
-            $this->usuario = new Usuario();
 			$this->seguridad = new Seguridad();
+			$this->usuario = new Usuario();
+			$this->instalacion = new Instalacion();
         }
 
         public function mostrarFormularioLogin() {
