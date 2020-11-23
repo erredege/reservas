@@ -19,13 +19,14 @@
 
 <?php
 
-	/* TODO MENU 
+	//TODO MENU 
 	if($_SESSION['tipo'] ==  "admin"){
-		echo "<p><h1>Registro de <a href='index.php?action=mostrarListaIncidencias'>Incidencias</a> y 
-		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> IES Celia Viñas</h1></p>";
+		echo "<p><h1><a href='index.php?action=/*TODO*/'> Reservas </a> | 
+		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
+		<a href='index.php?action=/*TODO*/'> Instalaciones </a></h1></p>";
 	}else{
-	}*/
-	echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
+		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
+	}
 	// Mostramos info del usuario logueado (si hay alguno)
 	if (isset($_SESSION['id'])) {
 		echo "<p>Sesion iniciada como, ".$_SESSION['nombre']."</p>";
