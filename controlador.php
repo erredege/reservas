@@ -68,7 +68,7 @@
 
 			// --------------------------------- INSERTAR Instalaciones ----------------------------------------
 
-        public function insertarIncidencia() {
+        public function insertarInstalacion() {
 				
 			if ($this->seguridad->haySesionIniciada()) {
 				// Vamos a procesar el formulario de alta de libros
@@ -85,7 +85,7 @@
 					// Si la insercion de la incidencia ha fallado, mostramos mensaje de error
 					$data['msjError'] = "Ha ocurrido un error al insertar la instalacion. Por favor, intentelo mas tarde.";
 				}
-				$data['listaIncidencias'] = $this->incidencia->getAll();
+				$data['listaInstalaciones'] = $this->instalacion->getAll();
 				$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
 
 			}else {
@@ -138,11 +138,11 @@
 		// --------------------------------- FORMULARIO MODIFICAR Instalaciones ----------------------------------------
 
 		public function formularioModificarInstalacion() {
-			if ($this->instalacion->haySesionIniciada()) {
+			if ($this->seguridad->haySesionIniciada()) {
 
 				$idUsuario = $_SESSION["id"];
 				$id = $_REQUEST["id"];
-				$data['instalacion'] = $this->intalacion->get($id);
+				$data['instalacion'] = $this->instalacion->get($id);
 				$this->vista->mostrar('instalacion/formularioModificarInstalacion', $data);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
@@ -164,8 +164,8 @@
 				}else {
 					$data['msjError'] = "Error al actualizar la Instalacion";
 				}
-				$data['listaInstalacion'] = $this->instalacion->getAll();
-				$this->vista->mostrar("instalacion/mostrarInstalacion", $data);
+				$data['listaInstalaciones'] = $this->instalacion->getAll();
+				$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}
@@ -173,12 +173,23 @@
 
 		// --------------------------------- BUSCAR Instalaciones ----------------------------------------
 
-        public function buscarIncidencias() {
+        public function buscarInstalacion() {
 			// Recuperamos el texto de b�squeda de la variable de formulario
 			$textoBusqueda = $_REQUEST["textoBusqueda"];
 			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencas
-			$data['listaInstalacion'] = $this->instalacion->busquedaAproximada($textoBusqueda);
+			$data['listaInstalaciones'] = $this->instalacion->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
+			$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
+		}
+
+		// ---------------------------------- CAMBIAR VALOR DE ORDENACION INCIDENCIAS--------------------------------
+
+		public function tipoBusquedaInstalacion(){
+			// Recuperamos el texto de búsqueda de la variable de formulario
+			$tipoBusqueda = $_REQUEST["tipoBusqueda"];
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
+			$data['listaInstalaciones'] = $this->instalacion->getOrder($tipoBusqueda);
+			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
 			$this->vista->mostrar("instalacion/mostrarInstalaciones", $data);
 		}
 
@@ -313,17 +324,6 @@
 			$data['listaUsuarios'] = $this->usuario->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
 			$this->vista->mostrar("usuario/mostrarUsuarios", $data);
-		}
-
-		// ---------------------------------- CAMBIAR VALOR DE ORDENACION INCIDENCIAS--------------------------------
-
-		public function tipoBusqueda(){
-			// Recuperamos el texto de búsqueda de la variable de formulario
-			$tipoBusqueda = $_REQUEST["tipoBusqueda"];
-			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
-			$data['listaIncidencias'] = $this->incidencia->getOrder($tipoBusqueda);
-			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
-			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 		}
 
 		// ---------------------------------- CAMBIAR VALOR DE ORDENACION USUARIOS--------------------------------

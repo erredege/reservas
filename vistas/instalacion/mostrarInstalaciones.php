@@ -25,10 +25,10 @@
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
 		<a href='index.php?action=mostrarInstalaciones'> Instalaciones </a></h1></p>";
 	}else{
-		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
+		echo "<p><a href='index.php?action=mostrarInstalaciones'><h1>Registro de Instalaciones</h1></a></p>";
 	}
 	// Mostramos info del usuario logueado (si hay alguno)
-	if (isset($_SESSION['id'])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p>Sesion iniciada como, ".$_SESSION['nombre']."</p>";
 	}
 	// Mostramos mensaje de error o de informaci�n (si hay alguno)
@@ -40,16 +40,16 @@
 	}
 	
 	// Primero, el formulario de busqueda
-	if (isset($_SESSION['id'])){
+	if ($this->seguridad->haySesionIniciada()){
 		echo "<form action='index.php'>
-				<input type='hidden' name='action' value='buscarUsuarios'>
+				<input type='hidden' name='action' value='buscarInstalacion'>
 				BUSCAR POR:
 				<input type='text' name='textoBusqueda' placeholder='nombre, descripcion o precio' size='30'>
 				<input type='submit' value='Buscar'>
 			</form><br>";
 	}
 
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<form action = 'index.php' method = 'get'>
 			Ordenar por: 
 			<select name='tipoBusqueda'>
@@ -57,7 +57,7 @@
 				<option value='descripcion'>Descripcion</option>
 				<option value='precio'>Precio</option>
 			</select>
-			<input type='hidden' name='action' value='tipoBusquedaUsuarios'>
+			<input type='hidden' name='action' value='tipoBusquedaInstalacion'>
 			<input type='submit' value='Ordenar'>";
 	}
 
@@ -76,7 +76,7 @@
             echo "</tr>";
             
 			foreach($data['listaInstalaciones'] as $instalaciones) {
-				echo "<tr id='usuario".$instalaciones->id."'>";
+				echo "<tr id='instalacion".$instalaciones->id."'>";
 					echo "<td>".$instalaciones->imagen."</td>";
 					echo "<td>".$instalaciones->nombre."</td>";
 					echo "<td>".$instalaciones->descripcion."</td>";
@@ -97,12 +97,12 @@
 	}
 
 	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p><a href='index.php?action=formularioInsertarInstalacion'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesion</a></p>";
 	}
 	else {

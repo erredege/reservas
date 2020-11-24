@@ -7,7 +7,7 @@
 		echo "<form action = 'index.php' method = 'get'>
 				Nombre:<input type='text' name='nombre'><br>
 				Descripcion:<input type='text' name='descripcion'><br>
-				Precio:<input type='int' name='precio'><br>
+				Precio:<input type='int' name='precio'>€ por hora<br>
 				Imagen:<input type='file' name='imagen'><br>";
 
 		// Finalizamos el formulario

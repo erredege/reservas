@@ -28,7 +28,7 @@
 		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
 	}
 	// Mostramos info del usuario logueado (si hay alguno)
-	if (isset($_SESSION['id'])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p>Sesion iniciada como, ".$_SESSION['nombre']."</p>";
 	}
 	// Mostramos mensaje de error o de informaci�n (si hay alguno)
@@ -40,7 +40,7 @@
 	}
 	
 	// Primero, el formulario de busqueda
-	if (isset($_SESSION['id'])){
+	if ($this->seguridad->haySesionIniciada()){
 		echo "<form action='index.php'>
 				<input type='hidden' name='action' value='buscarUsuarios'>
 				BUSCAR POR:
@@ -49,7 +49,7 @@
 			</form><br>";
 	}
 
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<form action = 'index.php' method = 'get'>
 			Ordenar por: 
 			<select name='tipoBusqueda'>
@@ -75,7 +75,7 @@
 				echo "<td>E.mail</td>";
 				echo "<td>Tipo</td>";
 				echo "<td>DNI</td>";
-				if (isset($_SESSION["id"])){
+				if ($this->seguridad->haySesionIniciada()){
 					echo "<td colspan='2'>Opciones</td>";
 				}
             echo "</tr>";
@@ -89,7 +89,7 @@
 					echo "<td>".$usuarios->email."</td>";
 					echo "<td>".$usuarios->tipo."</td>";
 					echo "<td>".$usuarios->dni."</td>";
-					if (isset($_SESSION["id"])){
+					if ($this->seguridad->haySesionIniciada()){
 						echo "<td><a href='index.php?action=formularioModificarUsuario&id=".$usuarios->id."'>Modificar</a></td>";
 						//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=".$usuarios->id."'>Borrar</a></td>";
 						echo "<td><a href='#' class='btnBorrar' id='".$usuarios->id."'>Borrar por Ajax/jQuery</a></td>";
@@ -105,12 +105,12 @@
 	}
 
 	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p><a href='index.php?action=formularioInsertarUsuario'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
-	if (isset($_SESSION["id"])) {
+	if ($this->seguridad->haySesionIniciada()) {
 		echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesion</a></p>";
 	}
 	else {

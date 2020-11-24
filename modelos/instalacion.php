@@ -71,18 +71,13 @@
             $arrayResult = array();
             // Buscamos los libros de la biblioteca que coincidan con el texto de búsqueda
 
-            if ($result = $this->db->consulta("SELECT * FROM instalaciones
-                        WHERE usuarios.id LIKE '%$textoBusqueda%'
-                        OR usuarios.nombre LIKE '%$textoBusqueda%'
-                        OR usuarios.descripcion LIKE '%$textoBusqueda%'
-                        OR usuarios.precio LIKE '%$textoBusqueda%'
-                        ORDER BY usuarios.id")) {
-                while ($fila = $result->fetch_object()) {
-                    $arrayResult[] = $fila;
-                }
-            } else {
-                $arrayResult = null;
-            }
-            return $arrayResult;
+            $result = $this->db->consulta("SELECT * FROM instalaciones
+                        WHERE instalaciones.id LIKE '%$textoBusqueda%'
+                        OR instalaciones.nombre LIKE '%$textoBusqueda%'
+                        OR instalaciones.descripcion LIKE '%$textoBusqueda%'
+                        OR instalaciones.precio LIKE '%$textoBusqueda%'
+                        ORDER BY instalaciones.id");
+            
+            return $result;
         }
     }

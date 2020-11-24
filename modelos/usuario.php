@@ -91,7 +91,7 @@
             $arrayResult = array();
             // Buscamos los libros de la biblioteca que coincidan con el texto de búsqueda
 
-            if ($result = $this->db->consulta("SELECT * FROM usuarios
+            $result = $this->db->consulta("SELECT * FROM usuarios
                         WHERE usuarios.id LIKE '%$textoBusqueda%'
                         OR usuarios.email LIKE '%$textoBusqueda%'
                         OR usuarios.nombre LIKE '%$textoBusqueda%'
@@ -99,14 +99,9 @@
                         OR usuarios.apellido2 LIKE '%$textoBusqueda%'
                         OR usuarios.dni LIKE '%$textoBusqueda%'
                         OR usuarios.tipo LIKE '%$textoBusqueda%'
-                        ORDER BY usuarios.id")) {
-                while ($fila = $result->fetch_object()) {
-                    $arrayResult[] = $fila;
-                }
-            } else {
-                $arrayResult = null;
-            }
-            return $arrayResult;
+                        ORDER BY usuarios.id");
+
+            return $result;
         }
 
         public function existeNombre($nombre) {
