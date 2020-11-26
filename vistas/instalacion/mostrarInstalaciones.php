@@ -21,9 +21,9 @@
 
 	//TODO MENU 
 	if($_SESSION['tipo'] ==  "admin"){
-		echo "<p><h1><a href='index.php?action=/*TODO*/'> Reservas </a> | 
+		echo "<p><h1><a href='index.php?action=/*TODO*/'>Reservas</a> | 
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
-		<a href='index.php?action=mostrarInstalaciones'> Instalaciones </a></h1></p>";
+		<a href='index.php?action=mostrarInstalaciones'>Instalaciones</a></h1></p>";
 	}else{
 		echo "<p><a href='index.php?action=mostrarInstalaciones'><h1>Registro de Instalaciones</h1></a></p>";
 	}
@@ -77,7 +77,7 @@
             
 			foreach($data['listaInstalaciones'] as $instalaciones) {
 				echo "<tr id='instalacion".$instalaciones->id."'>";
-					echo "<td> <img src=".$instalaciones->imagen." width='40' height='40'></td>";
+					echo "<td> <img src=".$instalaciones->imagen." width='80' height='80'></td>";
 					echo "<td>".$instalaciones->nombre."</td>";
 					echo "<td>".$instalaciones->descripcion."</td>";
 					echo "<td>".$instalaciones->precio."</td>";

@@ -21,9 +21,9 @@
 
 	//TODO MENU 
 	if($_SESSION['tipo'] ==  "admin"){
-		echo "<p><h1><a href='index.php?action=/*TODO*/'> Reservas </a> | 
+		echo "<p><h1><a href='index.php?action=/*TODO*/'>Reservas</a> | 
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
-		<a href='index.php?action=mostrarInstalaciones'> Instalaciones </a></h1></p>";
+		<a href='index.php?action=mostrarInstalaciones'>Instalaciones</a></h1></p>";
 	}else{
 		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro de Usarios</h1></a></p>";
 	}
@@ -82,7 +82,7 @@
             
 			foreach($data['listaUsuarios'] as $usuarios) {
 				echo "<tr id='usuario".$usuarios->id."'>";
-					echo "<td> <img src=".$usuarios->imagen." width='40' height='40'></td>";
+					echo "<td> <img src=".$usuarios->imagen." width='80' height='80'></td>";
 					echo "<td>".$usuarios->nombre."</td>";
 					echo "<td>".$usuarios->apellido1."</td>";
 					echo "<td>".$usuarios->apellido2."</td>";

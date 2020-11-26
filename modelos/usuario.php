@@ -12,8 +12,8 @@
 
             $usuario = $this->db->consulta("SELECT id, email, nombre, tipo FROM usuarios WHERE email = '$email' AND password = '$password'");
             
-            if ($usuario){
-                return $usuario;
+            if (count($usuario) == 1){
+                return $usuario[0];
             }else {
                 return null;
             }
