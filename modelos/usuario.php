@@ -51,11 +51,17 @@
             $apellido1 = $_REQUEST["apellido1"];
             $apellido2 = $_REQUEST["apellido2"];
             $dni = $_REQUEST["dni"];
-            $imagen = $_REQUEST["imagen"];
             $tipo = $_REQUEST["tipo"];
+            $dir_subida = 'imgs/usuario/';
+            $fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
 
-            $result = $this->db->manipulacion("INSERT INTO usuarios (email,password,nombre,apellido1,apellido2,dni,imagen,tipo) 
-                        VALUES ('$email', '$password', '$nombre', '$apellido1', '$apellido2', '$dni', '$imagen', '$tipo')");        
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
+                $result = $this->db->manipulacion("INSERT INTO usuarios (email,password,nombre,apellido1,apellido2,dni,imagen,tipo) 
+                        VALUES ('$email', '$password', '$nombre', '$apellido1', '$apellido2', '$dni', '$fichero_subido', '$tipo')");        
+            } else {
+                 $result = -1;
+            }
+
             
             return $result;
         }
@@ -69,10 +75,15 @@
             $apellido1 = $_REQUEST["apellido1"];
             $apellido2 = $_REQUEST["apellido2"];
             $dni = $_REQUEST["dni"];
-            $imagen = $_REQUEST["imagen"];
             $tipo = $_REQUEST["tipo"];
+            $dir_subida = 'imgs/usuario/';
+            $fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
 
-            $result = $this->db->manipulacion("UPDATE usuarios SET email = '$email', password = '$password', nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', dni = '$dni', imagen = '$imagen', tipo = '$tipo' WHERE id = '$id'");
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
+                $result = $this->db->manipulacion("UPDATE usuarios SET email = '$email', password = '$password', nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', dni = '$dni', imagen = '$fichero_subido', tipo = '$tipo' WHERE id = '$id'");
+            } else {
+                 $result = -1;
+            }
             return $result;
         }
 

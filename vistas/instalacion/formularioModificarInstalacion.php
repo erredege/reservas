@@ -3,7 +3,7 @@
 $instalacion = $data['instalacion'];
 
 echo "<h1>Modificar Instalacion</h1>";
-echo "<form action = 'index.php' method = 'get'>
+echo "<form action = 'index.php'method = 'POST' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='$instalacion->id'>
         Nombre:<input type='text' name='nombre' value='$instalacion->nombre'><br>
         Descripcion:<input type='text' name='descripcion' value='$instalacion->descripcion'><br>

@@ -74,7 +74,8 @@
 				// Vamos a procesar el formulario de alta de libros
 				// Primero, recuperamos todos los datos del formulario
 				// Ahora insertamos el libro en la BD
-				$result = $this->instalacion->insert($nombre, $descripcion, $imagen, $precio);
+				
+				$result = $this->instalacion->insert();
 
 				// Lanzamos el INSERT contra la BD.
 				if ($result == 1) {

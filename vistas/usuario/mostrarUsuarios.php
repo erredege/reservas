@@ -82,7 +82,7 @@
             
 			foreach($data['listaUsuarios'] as $usuarios) {
 				echo "<tr id='usuario".$usuarios->id."'>";
-					echo "<td>".$usuarios->imagen."</td>";
+					echo "<td> <img src=".$usuarios->imagen." width='40' height='40'></td>";
 					echo "<td>".$usuarios->nombre."</td>";
 					echo "<td>".$usuarios->apellido1."</td>";
 					echo "<td>".$usuarios->apellido2."</td>";

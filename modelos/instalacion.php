@@ -36,11 +36,16 @@
             $nombre = $_REQUEST["nombre"];
             $descripcion = $_REQUEST["descripcion"];
             $precio = $_REQUEST["precio"];
-            $imagen = $_REQUEST["imagen"];
-
-            $result = $this->db->manipulacion("INSERT INTO instalaciones (nombre,descripcion,precio,imagen) 
-                        VALUES ('$nombre', '$descripcion', '$precio', '$imagen')");        
-            
+            $dir_subida = 'imgs/instalacion/';
+            $fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
+	
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
+               $result = $this->db->manipulacion("INSERT INTO instalaciones (nombre,descripcion,precio,imagen) 
+                        VALUES ('$nombre', '$descripcion', '$precio', '$fichero_subido')"); 
+            } else {
+                $result = -1;
+            }
+                
             return $result;
         }
 
@@ -50,9 +55,16 @@
             $nombre = $_REQUEST["nombre"];
             $descripcion = $_REQUEST["descripcion"];
             $precio = $_REQUEST["precio"];
-            $imagen = $_REQUEST["imagen"];
+            //$imagen = $_REQUEST["imagen"];
+            $dir_subida = 'imgs/instalacion/';
+            $fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
 
-            $result = $this->db->manipulacion("UPDATE instalaciones SET nombre = '$nombre', descripcion = '$descripcion', precio = '$precio', imagen = '$imagen' WHERE id = '$id'");
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
+                $result = $this->db->manipulacion("UPDATE instalaciones SET nombre = '$nombre', descripcion = '$descripcion', precio = '$precio', imagen = '$fichero_subido' WHERE id = '$id'");
+            } else {
+                 $result = -1;
+            }
+
             return $result;
         }
 

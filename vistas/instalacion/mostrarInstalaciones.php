@@ -77,7 +77,7 @@
             
 			foreach($data['listaInstalaciones'] as $instalaciones) {
 				echo "<tr id='instalacion".$instalaciones->id."'>";
-					echo "<td>".$instalaciones->imagen."</td>";
+					echo "<td> <img src=".$instalaciones->imagen." width='40' height='40'></td>";
 					echo "<td>".$instalaciones->nombre."</td>";
 					echo "<td>".$instalaciones->descripcion."</td>";
 					echo "<td>".$instalaciones->precio."</td>";

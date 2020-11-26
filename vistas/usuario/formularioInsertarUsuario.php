@@ -17,7 +17,7 @@
 		echo "<h1>Alta usuario</h1>";
 
 		// Creamos el formulario con los campos del libro
-		echo "<form action = 'index.php' method = 'get'>
+		echo "<form action = 'index.php' method = 'POST' enctype='multipart/form-data'>
 				E-mail:<input type='email' name='email'><br>
 				Contraseña:<input type='password' name='password' id='psswd1'><br>
 				Comprobar Contraseña:<input type='password' id='psswd2'><span id='mensajeUsuario'></span><br>
