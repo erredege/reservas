@@ -81,7 +81,9 @@
 
             if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
                 $result = $this->db->manipulacion("UPDATE usuarios SET email = '$email', password = '$password', nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', dni = '$dni', imagen = '$fichero_subido', tipo = '$tipo' WHERE id = '$id'");
-            } else {
+            } else if($fichero_subido == "imgs/usuario/"){
+                $result = $this->db->manipulacion("UPDATE usuarios SET email = '$email', password = '$password', nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', dni = '$dni', tipo = '$tipo' WHERE id = '$id'");
+            } else{
                  $result = -1;
             }
             return $result;

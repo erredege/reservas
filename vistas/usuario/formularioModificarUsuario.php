@@ -12,7 +12,7 @@
 
 <?php
 
-$usuario = $data['usuario'];
+$usuario = $data['usuario'][0];
 
 echo "<h1>Modificar Usuario</h1>";
 echo "<form action = 'index.php' method = 'POST' enctype='multipart/form-data'>
@@ -25,6 +25,7 @@ echo "<form action = 'index.php' method = 'POST' enctype='multipart/form-data'>
         Segundo Apellido:<input type='text' name='apellido2' value='$usuario->apellido2'><br>
         DNI:<input type='text' name='dni' value='$usuario->dni'><br>
         Imagen:<input type='file' name='imagen' value='$usuario->imagen'><br>
+        <img src=".$usuario->imagen." width='80' height='80'><br><br>
         Tipo:"; if ($usuario->tipo ==  'admin'){
                 echo "<select name='tipo'>
                         <option value='admin' selected >admin</option>
