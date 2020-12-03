@@ -21,7 +21,7 @@
 
 	//TODO MENU 
 	if($_SESSION['tipo'] ==  "admin"){
-		echo "<p><h1><a href='index.php?action=/*TODO*/'>Reservas</a> | 
+		echo "<p><h1><a href='index.php?action=mostrarReservas'>Reservas</a> | 
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
 		<a href='index.php?action=mostrarInstalaciones'>Instalaciones</a></h1></p>";
 	}else{

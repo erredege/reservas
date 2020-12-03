@@ -1,22 +1,3 @@
-<script>
-	// **** Petición y respuesta AJAX con jQuery ****
-
-	$(document).ready(function() {
-		$(".btnBorrar").click(function() {
-			$.get("index.php?action=borrarInstalacionAjax&id=" + this.id, null, function(idBorrada) {
-	
-				if (idBorrada == -1) {
-					$('#msjError').html("Ha ocurrido un error al borrar la instalacion");
-				}
-				else {
-					$('#msjInfo').html("Instalacion borrada con éxito");
-					$('#instalacion' + idBorrada).remove();
-				}
-			});
-		});
-	});
-</script>
-
 <?php
 
 	//TODO MENU 
@@ -42,9 +23,9 @@
 	// Primero, el formulario de busqueda
 	if ($this->seguridad->haySesionIniciada()){
 		echo "<form action='index.php'>
-				<input type='hidden' name='action' value='buscarInstalacion'>
+				<input type='hidden' name='action' value='buscarReserva'>
 				BUSCAR POR:
-				<input type='text' name='textoBusqueda' placeholder='nombre, descripcion o precio' size='30'>
+				<input type='text' name='textoBusqueda' placeholder='fecha, hora o precio' size='30'>
 				<input type='submit' value='Buscar'>
 			</form><br>";
 	}
@@ -53,41 +34,46 @@
 		echo "<form action = 'index.php' method = 'get'>
 			Ordenar por: 
 			<select name='tipoBusqueda'>
-				<option value='nombre'>Nombre</option>
-				<option value='descripcion'>Descripcion</option>
+				<option value='fecha'>Fecha</option>
+				<option value='hora'>Hora</option>
 				<option value='precio'>Precio</option>
 			</select>
-			<input type='hidden' name='action' value='tipoBusquedaInstalacion'>
+			<input type='hidden' name='action' value='tipoBusquedaReserva'>
 			<input type='submit' value='Ordenar'>";
 	}
 
-	if (count($data['listaInstalaciones']) > 0) {
+	if (count($data['listaReservas']) > 0) {
 
 		// Ahora, la tabla con los datos de los libros
 		echo "<table border ='1'>";
 			echo "<tr>";
-				echo "<td>Imagen</td>";
-				echo "<td>Nombre</td>";
-				echo "<td>Descripcion</td>";
-				echo "<td>Precio</td>";
-				if (isset($_SESSION["id"])){
-					echo "<td colspan='2'>Opciones</td>";
-				}
+				echo "<td>Lunes</td>";
+				echo "<td>Martes</td>";
+				echo "<td>Miercoles</td>";
+                echo "<td>Jueves</td>";
+                echo "<td>Viernes</td>";
+                echo "<td>Sabado</td>";
+                echo "<td>Domingo</td>";
             echo "</tr>";
-            
-			foreach($data['listaInstalaciones'] as $instalaciones) {
-				echo "<tr id='instalacion".$instalaciones->id."'>";
-					echo "<td> <img src=".$instalaciones->imagen." width='80' height='80'></td>";
-					echo "<td>".$instalaciones->nombre."</td>";
-					echo "<td>".$instalaciones->descripcion."</td>";
-					echo "<td>".$instalaciones->precio."</td>";
+            $cont=1;
+            while ($cont <= 31) {
+                foreach($data['listaReservas'] as $reservas) {
+				    echo "<td id='instalacion".$reservas->id."'> $cont <br>";
+					echo "fecha: ".$reservas->fecha."<br>";
+					echo "hora: ".$reservas->hora."<br>";
+					echo "precio: ".$reservas->precio."€/hora <br>";
 					if (isset($_SESSION["id"])){
-						echo "<td><a href='index.php?action=formularioModificarInstalacion&id=".$instalaciones->id."'>Modificar</a></td>";
-						//echo "<td><a href='index.php?action=borrarUsuario&idUsuario=".$usuarios->id."'>Borrar</a></td>";
-						echo "<td><a href='#' class='btnBorrar' id='".$instalaciones->id."'>Borrar por Ajax/jQuery</a></td>";
-					}
-				echo "</tr>";
-			}
+						echo "<a href='index.php?action=formularioModificarReserva&id=".$reservas->id."'>Modificar</a><br>";
+						echo "<a href='#' class='btnBorrar' id='".$reservas->id."'>Borrar</a></td>";
+					}else{
+                        "</td>";
+                    }  
+                    $reservas->id++;  
+                }
+                if($cont%7 == 0){echo "</tr><tr>";}
+                $cont++;
+            }
+			
 		
 		echo "</table>";
 	} 

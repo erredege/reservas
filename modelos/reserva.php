@@ -1,7 +1,7 @@
 <?php
      include_once("DB.php");
 
-    class Instalacion {
+    class Reserva {
         private $db;
 
         public function __construct() {
@@ -37,7 +37,7 @@
             $hora = $_REQUEST["hora"];
             $precio = $_REQUEST["precio"];
 	
-            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio) VALUES ('$fecha', '$hora', '$precio'')"; 
+            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio) VALUES ('$fecha', '$hora', '$precio')");  
 
             return $result;
         }
