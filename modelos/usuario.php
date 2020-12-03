@@ -58,6 +58,10 @@
             if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
                 $result = $this->db->manipulacion("INSERT INTO usuarios (email,password,nombre,apellido1,apellido2,dni,imagen,tipo) 
                         VALUES ('$email', '$password', '$nombre', '$apellido1', '$apellido2', '$dni', '$fichero_subido', '$tipo')");        
+                
+                if ($result != 1) {
+                    unlink($fichero_subido);
+                }
             } else {
                  $result = -1;
             }

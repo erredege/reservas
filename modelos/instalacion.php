@@ -42,6 +42,10 @@
             if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
                $result = $this->db->manipulacion("INSERT INTO instalaciones (nombre,descripcion,precio,imagen) 
                         VALUES ('$nombre', '$descripcion', '$precio', '$fichero_subido')"); 
+
+                if ($result != 1) {
+                    unlink($fichero_subido);
+                }
             } else {
                 $result = -1;
             }
