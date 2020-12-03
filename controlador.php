@@ -3,6 +3,7 @@
 	include_once("modelos/seguridad.php");
 	include_once("modelos/usuario.php");
 	include_once("modelos/instalacion.php");
+	include_once("modelos/reserva.php");
 
 	// Creamos los objetos vista y modelos
  
@@ -16,6 +17,7 @@
 			$this->seguridad = new Seguridad();
 			$this->usuario = new Usuario();
 			$this->instalacion = new Instalacion();
+			$this->reserva = new Reserva();
         }
 
         public function mostrarFormularioLogin() {
@@ -240,46 +242,27 @@
 				
 		}
 
-		//---------------------------------- BORRAR USUARIO ---------------------------------
-
-		public function borrarUsuario() {
-			if ($this->seguridad->haySesionIniciada()) {
-				$idUsuario = $_REQUEST["idUsuario"];
-				$result = $this->usuario->delete($idUsuario);
-				if ($result == 0) {
-					$data['msjError'] = "Ha ocurrido un error al borrar ese usuario. Por favor, intentelo de nuevo";
-				} else {
-					$data['msjInfo'] = "Usuario borrado con exito";
-				}
-				$data['listaUsuarios'] = $this->usuario->getAll();
-				$this->vista->mostrar("usuario/mostrarUsuarios", $data);
-			} else {
-				$this->seguridad->errorAccesoNoPermitido();
-			}
-
-		}
-
 		// --------------------Elimina una incidencia de la base de datos (petición por ajax)----------------------------
 
-	public function borrarUsuarioAjax(){
+		public function borrarUsuarioAjax(){
 
-		if ($this->seguridad->haySesionIniciada()) {
-			// Recuperamos el id de la incidencia
-			$id = $_REQUEST["id"];
-			// Eliminamos la incidencia de la BD
-			$result = $this->usuario->delete($id);
-			if ($result == 0) {
-				// Error al borrar. Enviamos el código -1 al JS
+			if ($this->seguridad->haySesionIniciada()) {
+				// Recuperamos el id de la incidencia
+				$id = $_REQUEST["id"];
+				// Eliminamos la incidencia de la BD
+				$result = $this->usuario->delete($id);
+				if ($result == 0) {
+					// Error al borrar. Enviamos el código -1 al JS
+					echo "-1";
+				}
+				else {
+					// Borrado con éxito. Enviamos el id del libro a JS
+					echo $id;
+				}
+			} else {
 				echo "-1";
 			}
-			else {
-				// Borrado con éxito. Enviamos el id del libro a JS
-				echo $id;
-			}
-		} else {
-			echo "-1";
 		}
-	}
 
 		// --------------------------------- FORMULARIO MODIFICAR USUARIOS ----------------------------------------
 
@@ -335,7 +318,7 @@
 			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
 			$data['listaUsuarios'] = $this->usuario->getOrder($tipoBusqueda);
 			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
-			$this->vista->mostrar("usuario/mostrarusuarios", $data);
+			$this->vista->mostrar("usuario/mostrarUsuarios", $data);
 		}
 
 		// ----------------------------------- COMPROBAR NOMBRE DE USUARIO -------------------------------------------
@@ -344,5 +327,130 @@
 			$nombre = $_REQUEST["nombre"];
 			$result = $this->usuario->existeNombre($nombre);
 			echo $result;
+		}
+
+		//---------------------------------MOSTRAR LISTA RESERVAS ------------------------------------
+
+		public function mostrarReservas() {
+			$data['listaReservas'] = $this->reserva->getAll();
+			$this->vista->mostrar("reserva/mostrarReservas", $data);
+        }
+
+
+		// --------------------------------- INSERTAR RESERVAS ----------------------------------------
+
+		 public function formularioInsertarReserva() {
+			if ($this->seguridad->haySesionIniciada()) {
+				$this->vista->mostrar('reserva/formularioInsertarReserva');
+			} else {
+				$this->seguridad->errorAccesoNoPermitido();
+			}
+        }
+		
+
+			// --------------------------------- INSERTAR RESERVAS ----------------------------------------
+
+        public function insertarReserva() {
+			
+			if ($this->seguridad->haySesionIniciada()) {
+				// Vamos a procesar el formulario de alta de usuario
+				// Primero, recuperamos todos los datos del formulario
+				// Ahora insertamos el usuario en la BD
+				$result = $this->reserva->insert();
+
+				// Lanzamos el INSERT contra la BD.
+				if ($result == 1) {
+					// Tenemos que averiguar que idusuario se ha asignado al usuario que acabamos de insertar
+					$ultimoId = $this->reserva->getLastId();
+					$data['msjInfo'] = "Reserva insertado con exito";
+				} else {
+					// Si la insercion del usuario ha fallado, mostramos mensaje de error
+					$data['msjError'] = "Ha ocurrido un error al insertar la reserva. Por favor, intentelo mas tarde.";
+				}
+				$data['listaReservas'] = $this->reserva->getAll();
+				$this->vista->mostrar("reserva/mostrarReservas", $data);
+			} else {
+				$this->seguridad->errorAccesoNoPermitido();
+			}
+				
+		}
+
+		// --------------------Elimina una incidencia de la base de datos (petición por ajax)----------------------------
+
+		public function borrarReservaAjax(){
+
+			if ($this->seguridad->haySesionIniciada()) {
+				// Recuperamos el id de la incidencia
+				$id = $_REQUEST["id"];
+				// Eliminamos la incidencia de la BD
+				$result = $this->reserva->delete($id);
+				if ($result == 0) {
+					// Error al borrar. Enviamos el código -1 al JS
+					echo "-1";
+				}
+				else {
+					// Borrado con éxito. Enviamos el id del libro a JS
+					echo $id;
+				}
+			} else {
+				echo "-1";
+			}
+		}
+
+		// --------------------------------- FORMULARIO MODIFICAR RESERVAS ----------------------------------------
+
+		public function formularioModificarReserva() {
+			if ($this->seguridad->haySesionIniciada()) {
+
+				$id = $_REQUEST["id"];
+				$data['reserva'] = $this->reserva->get($id);
+				$this->vista->mostrar('reserva/formularioModificarReserva', $data);
+			} else {
+				$this->seguridad->errorAccesoNoPermitido();
+			}
+		}
+
+		// --------------------------------- MODIFICAR RESERVAS ----------------------------------------
+
+		public function modificarReserva() {
+
+			if ($this->seguridad->haySesionIniciada()) {
+
+				//lanzamos la consulta pa la bd
+				$result = $this->reserva->update();
+				
+				if ($result == 1) {
+				// Si la modificación del libro ha funcionado, continuamos actualizando la tabla "escriben".
+					$data['msjInfo'] = "Reserva actualizado con éxito";
+				}else {
+					$data['msjError'] = "Error al actualizar la reserva";
+				}
+				$data['listaReservas'] = $this->reserva->getAll();
+				$this->vista->mostrar("reserva/mostrarReservas", $data);
+			} else {
+				$this->seguridad->errorAccesoNoPermitido();
+			}
+		}
+
+		// --------------------------------- BUSCAR RESERVAS ----------------------------------------
+
+        public function buscarReservas() {
+			// Recuperamos el texto de búsqueda de la variable de formulario
+			$textoBusqueda = $_REQUEST["textoBusqueda"];
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de usuarios
+			$data['listaReservas'] = $this->reserva->busquedaAproximada($textoBusqueda);
+			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
+			$this->vista->mostrar("reserva/mostrarReservas", $data);
+		}
+
+		// ---------------------------------- CAMBIAR VALOR DE ORDENACION RESERVAS--------------------------------
+
+		public function tipoBusquedaReservas(){
+			// Recuperamos el texto de búsqueda de la variable de formulario
+			$tipoBusqueda = $_REQUEST["tipoBusqueda"];
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
+			$data['listaReservas'] = $this->reserva->getOrder($tipoBusqueda);
+			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
+			$this->vista->mostrar("reserva/mostrarReservas", $data);
 		}
     }

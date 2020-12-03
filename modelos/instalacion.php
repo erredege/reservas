@@ -62,7 +62,7 @@
             //$imagen = $_REQUEST["imagen"];
             $dir_subida = 'imgs/instalacion/';
             $fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
-            var_dump($fichero_subido);
+      
             if (move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
                 $result = $this->db->manipulacion("UPDATE instalaciones SET nombre = '$nombre', descripcion = '$descripcion', precio = '$precio', imagen = '$fichero_subido' WHERE id = '$id'");
             } else if($fichero_subido == "imgs/instalacion/"){
