@@ -14,4 +14,4 @@
 		echo "  <input type='hidden' name='action' value='insertarInstalacion'>
 				<input type='submit'>
 			</form>";
-		echo "<p><a href='index.php?action=mostrarInstalacion'>Volver</a></p>";
+		echo "<p><a href='index.php?action=mostrarInstalaciones'>Volver</a></p>";
