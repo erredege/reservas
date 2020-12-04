@@ -103,7 +103,7 @@
 
 	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
 	if ($this->seguridad->haySesionIniciada()) {
-		echo "<p><a href='index.php?action=formularioInsertarInstalacion'>Nuevo</a></p>";
+		echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
