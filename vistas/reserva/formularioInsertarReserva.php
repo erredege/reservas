@@ -5,6 +5,7 @@
 
 		// Creamos el formulario con los campos del libro
 		echo "<form action = 'index.php' method = 'POST'>
+				<input type='hidden' value='$cont'>
 				Fecha:<input type='date' name='fecha'><br>
 				Hora:<input type='int' name='hora'><br>
 				Precio:<input type='int' name='precio'>€ por hora<br>";

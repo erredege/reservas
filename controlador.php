@@ -375,7 +375,7 @@
 				
 		}
 
-		// --------------------Elimina una incidencia de la base de datos (petición por ajax)----------------------------
+		// --------------------Elimina una reserva de la base de datos (petición por ajax)----------------------------
 
 		public function borrarReservaAjax(){
 

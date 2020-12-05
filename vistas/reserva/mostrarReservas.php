@@ -73,26 +73,32 @@
                 echo "<td>Viernes</td>";
                 echo "<td>Sabado</td>";
                 echo "<td>Domingo</td>";
-            echo "</tr>";
+			echo "</tr>";
+			echo "<tr>";
             $cont=1;
             while ($cont <= 31) {
-                foreach($data['listaReservas'] as $reservas) {
-				    echo "<td id='instalacion".$reservas->id."'> $cont <br>";
+				echo "<td>";
+				echo "$cont <br>";
+				foreach($data['listaReservas'] as $reservas) {
+					echo "<input id='instalacion".$reservas->id."' type='hidden'>";
 					echo "fecha: ".$reservas->fecha."<br>";
 					echo "hora: ".$reservas->hora."<br>";
 					echo "precio: ".$reservas->precio."€/hora <br>";
 					if (isset($_SESSION["id"])){
 						echo "<a href='index.php?action=formularioModificarReserva&id=".$reservas->id."'>Modificar</a><br>";
-						echo "<a href='#' class='btnBorrar' id='".$reservas->id."'>Borrar</a></td>";
-					}else{
-                        "</td>";
-                    }  
-                    $reservas->id++;  
-                }
+						echo "<a href='#' class='btnBorrar' id='".$reservas->id."'>Borrar</a><br>";
+					} 
+					echo"-----------------------<br>";
+
+				}
+				// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
+				if ($this->seguridad->haySesionIniciada()) {
+					echo "<p><a href='index.php?action=formularioInsertarReserva&dia=".$cont."'>Nuevo</a></p>";
+				}
+				echo "</td>";
                 if($cont%7 == 0){echo "</tr><tr>";}
                 $cont++;
             }
-			
 		
 		echo "</table>";
 	} 
@@ -101,10 +107,7 @@
 		echo "No se encontraron datos";
 	}
 
-	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
-	if ($this->seguridad->haySesionIniciada()) {
-		echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
-	}
+	
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
 	if ($this->seguridad->haySesionIniciada()) {
