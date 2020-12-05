@@ -93,7 +93,7 @@
 				}
 				// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
 				if ($this->seguridad->haySesionIniciada()) {
-					echo "<p><a href='index.php?action=formularioInsertarReserva&dia=".$cont."'>Nuevo</a></p>";
+					echo "<p><a href='index.php?action=formularioInsertarReserva&cont=".$cont."'>Nuevo</a></p>";
 				}
 				echo "</td>";
                 if($cont%7 == 0){echo "</tr><tr>";}
