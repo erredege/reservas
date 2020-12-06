@@ -36,8 +36,9 @@
             $fecha = $_REQUEST["fecha"];
             $hora = $_REQUEST["hora"];
             $precio = $_REQUEST["precio"];
+            $diaMes = $_REQUEST["diaMes"];
 	
-            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio) VALUES ('$fecha', '$hora', '$precio')");  
+            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio,diaMes) VALUES ('$fecha', '$hora', '$precio', '$diaMes')");  
 
             return $result;
         }
@@ -48,8 +49,9 @@
             $fecha = $_REQUEST["fecha"];
             $hora = $_REQUEST["hora"];
             $precio = $_REQUEST["precio"];
-            
-            $result = $this->db->manipulacion("UPDATE reservas SET fecha = '$fecha', hora = '$hora', precio = '$precio' WHERE id = '$id'");
+            $diaMes = $_REQUEST["diaMes"];
+
+            $result = $this->db->manipulacion("UPDATE reservas SET fecha = '$fecha', hora = '$hora', precio = '$precio', diaMes = '$diaMes' WHERE id = '$id'");
 
             return $result;
         }
