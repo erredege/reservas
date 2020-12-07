@@ -36,9 +36,8 @@
             $fecha = $_REQUEST["fecha"];
             $hora = $_REQUEST["hora"];
             $precio = $_REQUEST["precio"];
-            $diaMes = $_REQUEST["diaMes"];
 	
-            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio,diaMes) VALUES ('$fecha', '$hora', '$precio', '$diaMes')");  
+            $result = $this->db->manipulacion("INSERT INTO reservas (fecha,hora,precio) VALUES ('$fecha', '$hora', '$precio')");  
 
             return $result;
         }
@@ -49,9 +48,8 @@
             $fecha = $_REQUEST["fecha"];
             $hora = $_REQUEST["hora"];
             $precio = $_REQUEST["precio"];
-            $diaMes = $_REQUEST["diaMes"];
 
-            $result = $this->db->manipulacion("UPDATE reservas SET fecha = '$fecha', hora = '$hora', precio = '$precio', diaMes = '$diaMes' WHERE id = '$id'");
+            $result = $this->db->manipulacion("UPDATE reservas SET fecha = '$fecha', hora = '$hora', precio = '$precio' WHERE id = '$id'");
 
             return $result;
         }
@@ -65,6 +63,12 @@
             $result = $this->db->consulta("SELECT MAX(id) AS ultimoId FROM reservas");
             $id = $result->ultimoId;
             return $id;
+        }
+
+        public function getDay($id){
+            $result = $this->db-> consulta("SELECT DAY(fecha) AS diaFecha FROM reservas WHERE id = '$id'");
+            $dia = $result->diaFecha;
+            return $dia;
         }
 
         public function busquedaAproximada($textoBusqueda) {

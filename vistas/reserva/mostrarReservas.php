@@ -62,7 +62,6 @@
 	}
 
 	if (count($data['listaReservas']) > 0) {
-
 		// Ahora, la tabla con los datos de los libros
 		echo "<table border ='1'>";
 			echo "<tr>";
@@ -75,12 +74,12 @@
                 echo "<td>Domingo</td>";
 			echo "</tr>";
 			echo "<tr>";
-            $diaMes=1;
-            while ($diaMes <= 31) {
+            $cont=01;
+            while ($cont <= 31) {
 				echo "<td>";
-				echo "$diaMes <br>";
+				echo "$cont <br>";
 				foreach($data['listaReservas'] as $reservas) {
-					if ($diaMes == $reservas->diaMes) {
+					if($dia == $cont){
 						echo "<input id='instalacion".$reservas->id."' type='hidden'>";
 						echo "fecha: ".$reservas->fecha."<br>";
 						echo "hora: ".$reservas->hora."<br>";
@@ -91,16 +90,15 @@
 						} 
 						echo"-----------------------<br>";
 					}
-						
 
 				}
 				// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
 				if ($this->seguridad->haySesionIniciada()) {
-					echo "<p><a href='index.php?action=formularioInsertarReserva&diaMes=".$reservas->diaMes."'>Nuevo</a></p>";
+					echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
 				}
 				echo "</td>";
-                if($diaMes%7 == 0){echo "</tr><tr>";}
-                $diaMes++;
+                if($cont%7 == 0){echo "</tr><tr>";}
+                $cont++;
             }
 		
 		echo "</table>";

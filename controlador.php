@@ -367,8 +367,9 @@
 					// Si la insercion del usuario ha fallado, mostramos mensaje de error
 					$data['msjError'] = "Ha ocurrido un error al insertar la reserva. Por favor, intentelo mas tarde.";
 				}
+				$dia = $this->reserva->getDay($id);
 				$data['listaReservas'] = $this->reserva->getAll();
-				$this->vista->mostrar("reserva/mostrarReservas", $data);
+				$this->vista->mostrar("reserva/mostrarReservas", $data, $dia);
 			} else {
 				$this->seguridad->errorAccesoNoPermitido();
 			}
