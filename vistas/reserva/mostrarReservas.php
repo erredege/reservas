@@ -60,6 +60,8 @@
 			<input type='hidden' name='action' value='tipoBusquedaReserva'>
 			<input type='submit' value='Ordenar'>";
 	}
+	echo"<br>";
+	var_dump($data);
 
 	if (count($data['listaReservas']) > 0) {
 		// Ahora, la tabla con los datos de los libros
@@ -79,7 +81,7 @@
 				echo "<td>";
 				echo "$cont <br>";
 				foreach($data['listaReservas'] as $reservas) {
-					if($dia == $cont){
+					if($data['dia'] == $cont){
 						echo "<input id='instalacion".$reservas->id."' type='hidden'>";
 						echo "fecha: ".$reservas->fecha."<br>";
 						echo "hora: ".$reservas->hora."<br>";
@@ -107,8 +109,6 @@
 		// La consulta no contiene registros
 		echo "No se encontraron datos";
 	}
-
-	
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
 	if ($this->seguridad->haySesionIniciada()) {

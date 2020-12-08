@@ -65,6 +65,12 @@
             return $id;
         }
 
+        public function getAllId() {
+            $arrayResult = array();
+            $result = $this->db->consulta("SELECT id FROM reservas");
+            return $result;
+        }
+
         public function getDay($id){
             $result = $this->db-> consulta("SELECT DAY(fecha) AS diaFecha FROM reservas WHERE id = '$id'");
             $dia = $result->diaFecha;
