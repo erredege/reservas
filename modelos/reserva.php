@@ -72,9 +72,9 @@
         }
 
         public function getDay($id){
-            $result = $this->db-> consulta("SELECT DAY(fecha) AS diaFecha FROM reservas WHERE id = '$id'");
-            $dia = $result->diaFecha;
-            return $dia;
+            $arrayResult = array();
+            $result = $this->db->consulta("SELECT DAY(fecha) AS dia FROM reservas WHERE id = '$id'");
+            return $result;
         }
 
         public function busquedaAproximada($textoBusqueda) {
