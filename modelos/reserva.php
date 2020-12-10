@@ -72,7 +72,6 @@
         }
 
         public function getDay($id){
-            $arrayResult = array();
             $result = $this->db->consulta("SELECT DAY(fecha) AS dia FROM reservas WHERE id = '$id'");
             return $result;
         }

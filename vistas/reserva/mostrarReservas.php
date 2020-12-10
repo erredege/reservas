@@ -61,7 +61,7 @@
 			<input type='submit' value='Ordenar'>";
 	}
 	echo"<br>";
-	var_dump($data);
+	//var_dump($data);
 
 	if (count($data['listaReservas']) > 0) {
 		// Ahora, la tabla con los datos de los libros
@@ -95,10 +95,6 @@
 						}
 
 					}
-					// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
-					if ($this->seguridad->haySesionIniciada()) {
-						echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
-					}
 					echo "</td>";
 					if($cont%7 == 0){echo "</tr><tr>";}
 					$cont++;
@@ -122,10 +118,7 @@
 						}
 
 					}
-					// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
-					if ($this->seguridad->haySesionIniciada()) {
-						echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
-					}
+					
 					echo "</td>";
 					if($cont%7 == 0){echo "</tr><tr>";}
 					$cont++;
@@ -137,6 +130,11 @@
 	else {
 		// La consulta no contiene registros
 		echo "No se encontraron datos";
+	}
+
+	// El bot�n "Nueva reserva" solo se muestra si hay una sesi�n iniciada
+	if ($this->seguridad->haySesionIniciada()) {
+		echo "<p><a href='index.php?action=formularioInsertarReserva'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
