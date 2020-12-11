@@ -27,13 +27,18 @@
         public function procesarLogin() {
 			$email = $_REQUEST["email"];
 			$password = $_REQUEST["password"];
+			
 
 			$usuario = $this->usuario->buscarUsuario($email, $password);
 			
 			if ($usuario) {
 				$this->seguridad->abrirSesion($usuario);
-				//$this->mostrarListaIncidencias();
-				$this->mostrarUsuarios();
+				$id = $_SESSION["id"];
+				if ($id == "admin"){
+					$this->mostrarUsuarios();
+				}else{
+					$this->mostrarReservas();
+				}
 			} 
 			else {
 				// Error al iniciar la sesion

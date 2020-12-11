@@ -25,7 +25,7 @@
 		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> | 
 		<a href='index.php?action=mostrarInstalaciones'>Instalaciones</a></h1></p>";
 	}else{
-		echo "<p><a href='index.php?action=mostrarInstalaciones'><h1>Instalaciones</h1></a></p>";
+		echo "<p><a href='index.php?action=mostrarReservas'><h1>Reservas</h1></a></p>";
 	}
 	// Mostramos info del usuario logueado (si hay alguno)
 	if ($this->seguridad->haySesionIniciada()) {
